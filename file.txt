@@ -1,0 +1,122 @@
+import boto3
+from uuid import uuid4
+
+def lambda_handler(event, context):
+    dynamodb = boto3.resource('dynamodb')
+    dynamoTable = dynamodb.Table('newtable2')  # Replace 'newtable2' with your DynamoDB table name
+
+    if 'Records' in event:
+        for record in event['Records']:
+            bucket_name = record['s3']['bucket']['name']
+            object_key = record['s3']['object']['key']
+            size = record['s3']['object'].get('size', -1)
+            event_name = record['eventName']
+            event_time = record['eventTime']
+
+            # Insert data into DynamoDB
+            dynamoTable.put_item(
+                Item={
+                    'unique': str(uuid4()),
+                    'Bucket': bucket_name,
+                    'Object': object_key,
+                    'Size': size,
+                    'Event': event_name,
+                    'EventTime': event_time
+                }
+            )
+    else:
+        print("No S3 event received")
+
+    return {
+        "statusCode": 200,
+        "body": "Data stored in DynamoDB"
+    }
+
+// Test
+
+{
+  "Records": [
+    {
+      "eventVersion": "2.1",
+      "eventSource": "aws:s3",
+      "awsRegion": "us-east-1",
+      "eventTime": "2026-03-09T12:00:00.000Z",
+      "eventName": "ObjectCreated:Put",
+      "s3": {
+        "bucket": {
+          "name": "your-bucket-name"
+        },
+        "object": {
+          "key": "example.txt",
+          "size": 123
+        }
+      }
+    }
+  ]
+}
+
+
+yum update -y
+yum install httpd -y
+systemctl start httpd
+systemctl enable httpd
+echo  "This is Server 1" > /var/www/html/index.html
+
+
+def lambda_handler(event, context):
+
+    for record in event['Records']:
+        print("Message received from SQS:")
+        print(record['body'])
+
+    return {
+        'statusCode': 200,
+        'body': 'Message processed successfully'
+    }
+
+// PHP
+
+Name: <input type="text" name="name" value="<?php echo $name;?>">
+
+E-mail: <input type="text" name="email" value="<?php echo $email;?>">
+
+Website: <input type="text" name="website" value="<?php echo $website;?>">
+
+Comment: <textarea name="comment" rows="5" cols="40"><?php echo $comment;?></textarea>
+
+Gender:
+<input type="radio" name="gender"
+<?php if (isset($gender) && $gender=="female") echo "checked";?>
+value="female">Female
+<input type="radio" name="gender"
+<?php if (isset($gender) && $gender=="male") echo "checked";?>
+value="male">Male
+<input type="radio" name="gender"
+<?php if (isset($gender) && $gender=="other") echo "checked";?>
+value="other">Other
+
+
+aws configure
+aws s3 ls
+aws s3 mb s3://my-buc-123
+aws iam list-users
+aws ec2 describe-instances
+
+
+
+
+sudo fdisk /dev/nvme1n1
+sudo partprobe
+lsblk -fs
+sudo mkfs.xfs /dev/nvme1n1p1
+sudo mkdir /mnt/ebstry
+sudo mount /dev/nvme1n1p1 /mnt/ebstry
+sudo blkid /dev/nvme1n1p1
+sudo nano/etc/fstab
+UUID=--- /mnt/ebstry xfs default,nofail 0 0
+sudo mount -a
+df-h 
+sudo systemctl daemon-reload
+
+
+
